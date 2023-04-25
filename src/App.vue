@@ -33,6 +33,34 @@ import TheWelcome from './components/TheWelcome.vue'
   </footer>
 
 </template>
+<script>
+export default {
+  // create method to connect websocket
+  created() {
+    this.connect();
+  },
+  methods: {
+    connect() {
+      // connect to websocket
+      const socket = new WebSocket("ws://localhost:8080");
+
+      // listen to websocket events
+      socket.addEventListener("open", () => {
+        console.log("connected to server");
+      });
+
+      socket.addEventListener("message", (message) => {
+        console.log("received message", message.data);
+      });
+
+      socket.addEventListener("close", () => {
+        console.log("disconnected from server");
+      });
+    },
+  },
+};
+}
+</script>
 
 <style scoped>
 header {
